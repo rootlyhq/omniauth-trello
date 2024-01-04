@@ -1,9 +1,9 @@
-require 'omniauth-oauth'
+require 'omniauth-oauth2'
 require 'multi_json'
 
 module OmniAuth
   module Strategies
-    class Trello < OmniAuth::Strategies::OAuth
+    class Trello < OmniAuth::Strategies::OAuth2
       option :name, "trello"
       option :client_options, { :site => "https://trello.com",
                                 :request_token_path => "/1/OAuthGetRequestToken",

@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'omniauth-trello/version'
+require File.expand_path('../lib/omniauth-trello/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "omniauth-trello"
@@ -13,18 +11,19 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/joshrowley/omniauth-trello"
   gem.license       = "MIT"
 
-  gem.add_runtime_dependency      'omniauth', '~> 2.0'
-  gem.add_runtime_dependency      'omniauth-oauth', '~> 1.0'
-  gem.add_runtime_dependency      'oauth', '< 2'
-  gem.add_dependency              'multi_json', '~> 1.15'
-  gem.add_development_dependency  'simplecov', '~> 0.21'
-  gem.add_development_dependency  'rspec', '~> 3.0'
-  gem.add_development_dependency  'rack-test'
-  gem.add_development_dependency  'webmock'
-  gem.add_development_dependency  'rake'
-
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  gem.files         = `git ls-files`.split("\n")
+  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  gem.name          = "omniauth-trello"
   gem.require_paths = ["lib"]
+
+  gem.required_ruby_version = ">= 3"
+
+  gem.add_dependency 'omniauth', '~> 2.0.0'
+  gem.add_dependency 'omniauth-oauth2', '>= 1.4.0', '< 2.0'
+  gem.add_dependency 'multi_json', '~> 1.15'
+  gem.add_development_dependency 'rspec', '~> 3.5'
+  gem.add_development_dependency 'rack-test'
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'webmock'
 end

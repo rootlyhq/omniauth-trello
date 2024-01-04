@@ -1,5 +1,4 @@
 require 'spec_helper'
-require_relative '../../../lib/omniauth/strategies/trello'
 
 describe OmniAuth::Strategies::Trello do
   subject do
@@ -21,6 +20,28 @@ describe OmniAuth::Strategies::Trello do
 
     it "should have the correct access token path" do
       expect(subject.options.client_options.access_token_path).to eq("/1/OAuthGetAccessToken")
+    end
+  end
+
+  describe '#callback_url' do
+    let(:base_url) { 'https://example.com' }
+
+    context 'no script name present' do
+      it 'has the correct default callback path' do
+        allow(subject).to receive(:full_host) { base_url }
+        allow(subject).to receive(:script_name) { '' }
+        allow(subject).to receive(:query_string) { '' }
+        expect(subject.callback_url).to eq(base_url + '/auth/trello/callback')
+      end
+    end
+
+    context 'script name' do
+      it 'should set the callback path with script_name' do
+        allow(subject).to receive(:full_host) { base_url }
+        allow(subject).to receive(:script_name) { '/v1' }
+        allow(subject).to receive(:query_string) { '' }
+        expect(subject.callback_url).to eq(base_url + '/v1/auth/trello/callback')
+      end
     end
   end
 end
